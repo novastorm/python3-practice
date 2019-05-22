@@ -12,6 +12,16 @@ class Test_SinglyLinkedList(unittest.TestCase):
         self.assertIsNone(self.list.head)
         self.assertIsNone(self.list.tail)
 
+    def test_DoublyLinkedListGetValueOutOfBounds(self):
+        with self.assertRaises(AssertionError):
+            self.list.getValue(atIndex=0)
+        with self.assertRaises(AssertionError):
+            self.list.getValue(atIndex=1)
+        with self.assertRaises(AssertionError):
+            self.list[0]
+        with self.assertRaises(AssertionError):
+            self.list[1]
+
     def test_SinglyLinkedListInsertOutOfBounds(self):
         with self.assertRaises(AssertionError):
             self.list.insert(1, atIndex=1)
@@ -22,6 +32,7 @@ class Test_SinglyLinkedList(unittest.TestCase):
         self.assertFalse(self.list.isEmpty)
         self.assertEqual(self.list[0], 2)
         self.assertTrue(self.list == [2])
+        self.assertEqual(self.list, [2])
 
         self.list.insert(0, atIndex=0)
         self.assertEqual(self.list.count, 2)
@@ -74,26 +85,39 @@ class Test_SinglyLinkedList(unittest.TestCase):
             self.list.remove(atIndex=1)
 
     def test_SinglyLinkedListRemove(self):
-        for i in range(0, 5+1):
+        for i in range(0, 4+1):
             self.list.append(i)
 
-        self.assertEqual(self.list.remove(atIndex=self.list.count-1), 5)
-        self.assertEqual(self.list.count, 5)
         self.assertTrue(self.list == [0,1,2,3,4])
+
+        self.assertEqual(self.list.remove(atIndex=3), 3)
+        self.assertTrue(self.list == [0,1,2,4])
+        self.assertEqual(self.list.count, 4)
         self.assertEqual(self.list.head, 0)
         self.assertEqual(self.list[self.list.count-1], 4)
 
-        self.assertEqual(self.list.remove(atIndex=2), 2)
-        self.assertEqual(self.list.count, 4)
-        self.assertTrue(self.list == [0,1,3,4])
+        self.assertEqual(self.list.remove(atIndex=1), 1)
+        self.assertTrue(self.list == [0,2,4])
+        self.assertEqual(self.list.count, 3)
         self.assertEqual(self.list.head, 0)
         self.assertEqual(self.list[self.list.count-1], 4)
+
+        self.assertEqual(self.list.remove(atIndex=self.list.count-1), 4)
+        self.assertEqual(self.list.count, 2)
+        self.assertTrue(self.list == [0,2])
+        self.assertEqual(self.list.head, 0)
+        self.assertEqual(self.list[self.list.count-1], 2)
 
         self.assertEqual(self.list.remove(atIndex=0), 0)
-        self.assertEqual(self.list.count, 3)
-        self.assertTrue(self.list == [1,3,4])
-        self.assertEqual(self.list.head, 1)
-        self.assertEqual(self.list[self.list.count-1], 4)
+        self.assertTrue(self.list == [2])
+        self.assertEqual(self.list.count, 1)
+        self.assertEqual(self.list.head, 2)
+        self.assertEqual(self.list[self.list.count-1], 2)
+
+        self.assertEqual(self.list.remove(atIndex=0), 2)
+        self.assertTrue(self.list == [])
+        self.assertEqual(self.list.count, 0)
+        self.assertIsNone(self.list.head)
 
 
     def test_SinglyLinkedListIterator(self):
