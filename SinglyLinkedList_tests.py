@@ -90,7 +90,6 @@ class Test_SinglyLinkedList(unittest.TestCase):
         self.assertEqual(self.list[self.list.count-1], 4)
 
         self.assertEqual(self.list.remove(atIndex=0), 0)
-        print(str(self.list))
         self.assertEqual(self.list.count, 3)
         self.assertTrue(self.list == [1,3,4])
         self.assertEqual(self.list.head, 1)
