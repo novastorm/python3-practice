@@ -24,7 +24,7 @@ class ADL_SinglyLinkedList:
 
     @property
     def count(self):
-        return (1 if self.value is not None else 0) + (self.next.count if self.next is not None else 0)
+        return (1 if self.value is not None else 0) + getattr(self.next, "count", 0)
 
     def __len__(self):
         return self.count
@@ -36,7 +36,7 @@ class ADL_SinglyLinkedList:
     
     @property
     def head(self):
-        return self.next.value if self.next is not None else None
+        return getattr(self.next, "value", None)
 
 
     @property
@@ -45,7 +45,7 @@ class ADL_SinglyLinkedList:
             return None
 
         newList = ADL_SinglyLinkedList()
-        newList.next = self.next.next if self.next is not None else None
+        newList.next = getattr(self.next, "next", None)
         return newList
         
 
@@ -69,6 +69,17 @@ class ADL_SinglyLinkedList:
             nodeAtIndex.next = newNode
 
 
+    def getValue(self, atIndex):
+        assert 0 <= atIndex and atIndex < self.count, "index out of bounds"
+        index = atIndex
+
+        nodeAtIndex = self.next
+        for i in range(index):
+            nodeAtIndex = nodeAtIndex.next
+
+        return nodeAtIndex.value
+
+
     def append(self, value):
         self.insert(value, self.count)
 
@@ -83,24 +94,29 @@ class ADL_SinglyLinkedList:
 
         nodeAtIndex.value = value
 
-
-    def __setitem__(self, key, value):
-        self.update(value, key)
-
-
-    def getValue(self, atIndex):
+    def remove(self, atIndex):
         assert 0 <= atIndex and atIndex < self.count, "index out of bounds"
         index = atIndex
 
-        nodeAtIndex = self.next
-        for i in range(index):
-            nodeAtIndex = nodeAtIndex.next
+        node = self.next
+        if index == 0:
+            self.next = getattr(node, "next", None)
+        else:
+            precedingNode = self.next
+            for i in range(1, index):
+                precedingNode = getattr(precedingNode, "next", None)
+            node = getattr(precedingNode, "next", None)
+            if precedingNode is not None:
+                precedingNode.next = getattr(node, "next", None)
 
-        return nodeAtIndex.value
+        return getattr(node, "value", None)
 
     
     def __getitem__(self, index):
         return self.getValue(index)
+
+    def __setitem__(self, key, value):
+        self.update(value, key)
 
 
     class Iterator:
@@ -130,13 +146,15 @@ class ADL_SinglyLinkedList:
         s += "]"
         return s
 
+
     def __eq__(self, other):
         if isinstance(other, ADL_SinglyLinkedList) \
             or isinstance(other, list):
 
             return self.isEqualToOther(other)
-
+            
         raise NotImplementedError
+
 
     def isEqualToOther(self, other):
         if len(self) != len(other):
@@ -147,21 +165,4 @@ class ADL_SinglyLinkedList:
                 return False
 
         return True
-
-    def remove(self, atIndex):
-        assert 0 <= atIndex and atIndex < self.count, "index out of bounds"
-        index = atIndex
-
-        node = self.next
-        if index == 0:
-            self.next = node.next if node is not None else None
-        else:
-            precedingNode = self.next
-            for i in range(1, index):
-                precedingNode = precedingNode.next if precedingNode is not None else None
-            node = precedingNode.next if precedingNode is not None else None
-            if precedingNode is not None:
-                precedingNode.next = node.next if node is not None else None
-
-        return node.value if node is not None else None
 
