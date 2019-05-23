@@ -131,20 +131,21 @@ class ADL_SinglyLinkedList:
         index = atIndex
 
         node = self.startNode
+
         if index == 0:
             self.startNode = getattr(node, "next", None)
         else:
             precedingNode = self.startNode
             for i in range(1, index):
-                precedingNode = getattr(precedingNode, "next", None)
-            node = getattr(precedingNode, "next", None)
+                precedingNode = precedingNode.next
 
+            node = precedingNode.next
             precedingNode.next = node.next
 
             if index == self.count:
                 self.endNode = precedingNode
 
-        return getattr(node, "value", None)
+        return node.value
 
     
     def __getitem__(self, index):
