@@ -82,15 +82,23 @@ class ADL_SinglyLinkedList:
         newNode.value = value
 
         if index == 0:
+            if self.isEmpty:
+                self.endNode = newNode
+
             newNode.next = self.startNode
+
             self.startNode = newNode
         else:
             nodeAtIndex = self.startNode
             for i in range(1, index):
                 nodeAtIndex = nodeAtIndex.next
-            newNode.next = nodeAtIndex.next
 
+            if index == self.count:
+                self.endNode = newNode
+
+            newNode.next = nodeAtIndex.next
             nodeAtIndex.next = newNode
+
 
 
     def getValue(self, atIndex):
@@ -130,8 +138,11 @@ class ADL_SinglyLinkedList:
             for i in range(1, index):
                 precedingNode = getattr(precedingNode, "next", None)
             node = getattr(precedingNode, "next", None)
-            if precedingNode is not None:
-                precedingNode.next = getattr(node, "next", None)
+
+            precedingNode.next = node.next
+
+            if index == self.count:
+                self.endNode = precedingNode
 
         return getattr(node, "value", None)
 
