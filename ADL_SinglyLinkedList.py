@@ -1,42 +1,66 @@
 class ADL_SinglyLinkedList:
     """Singly Linked List Implementation"""
 
-    def __init__(self):
-        self.next = None
-        self.value = None
+    class Node:
+
+        def __init__(self):
+            self.next = None
+            self.value = None
+
+
+        @property
+        def value(self):
+            return self._value
+        @value.setter
+        def value(self, newValue):
+            self._value = newValue
+
+
+        @property
+        def next(self):
+            return self._next
+        @next.setter
+        def next(self, newValue):
+            self._next = newValue
 
 
     @property
-    def value(self):
-        return self._value
-    @value.setter
-    def value(self, newValue):
-        self._value = newValue
+    def startNode(self):
+        return getattr(self, "_startNode", None)
+    @startNode.setter
+    def startNode(self, newValue):
+        self._startNode = newValue
 
 
     @property
-    def next(self):
-        return self._next
-    @next.setter
-    def next(self, newValue):
-        self._next = newValue
+    def endNode(self):
+        return getattr(self, "_endNode", None)
+    @endNode.setter
+    def endNode(self, newValue):
+        self._endNode = newValue
 
 
     @property
     def count(self):
-        return (1 if self.value is not None else 0) + getattr(self.next, "count", 0)
+        return len(self)
 
     def __len__(self):
-        return self.count
+        results = 0
+        node = self.startNode
+        while node is not None:
+            results += 1
+            node = node.next
+        return results
+
 
     @property
     def isEmpty(self):
-        return self.count == 0
+        return self.startNode is None
     
-    
+
     @property
     def head(self):
-        return getattr(self.next, "value", None)
+        return getattr(self.startNode, "value", None)
 
 
     @property
@@ -45,7 +69,7 @@ class ADL_SinglyLinkedList:
             return None
 
         newList = ADL_SinglyLinkedList()
-        newList.next = getattr(self.next, "next", None)
+        newList.head = getattr(self.startNode, "next", None)
         return newList
         
 
@@ -54,17 +78,17 @@ class ADL_SinglyLinkedList:
 
         index = atIndex
 
-        newNode = ADL_SinglyLinkedList()
+        newNode = self.Node()
         newNode.value = value
 
         if index == 0:
-            newNode.next = self.next
-            self.next = newNode
+            newNode.next = self.startNode
+            self.startNode = newNode
         else:
-            nodeAtIndex = self.next
+            nodeAtIndex = self.startNode
             for i in range(1, index):
                 nodeAtIndex = nodeAtIndex.next
-            newNode.next = getattr(nodeAtIndex, "next", None)
+            newNode.next = nodeAtIndex.next
 
             nodeAtIndex.next = newNode
 
@@ -73,7 +97,7 @@ class ADL_SinglyLinkedList:
         assert 0 <= atIndex and atIndex < self.count, "index out of bounds"
         index = atIndex
 
-        nodeAtIndex = self.next
+        nodeAtIndex = self.startNode
         for i in range(index):
             nodeAtIndex = nodeAtIndex.next
 
@@ -81,14 +105,14 @@ class ADL_SinglyLinkedList:
 
 
     def append(self, value):
-        self.insert(value, self.count)
+        self.insert(value, len(self))
 
 
     def update(self, value, atIndex):
         assert 0 <= atIndex and atIndex <= self.count, "index out of bounds"
         index = atIndex
 
-        nodeAtIndex = self.next
+        nodeAtIndex = self.startNode
         for i in range(index):
             nodeAtIndex = nodeAtIndex.next
 
@@ -98,11 +122,11 @@ class ADL_SinglyLinkedList:
         assert 0 <= atIndex and atIndex < self.count, "index out of bounds"
         index = atIndex
 
-        node = self.next
+        node = self.startNode
         if index == 0:
-            self.next = getattr(node, "next", None)
+            self.startNode = getattr(node, "next", None)
         else:
-            precedingNode = self.next
+            precedingNode = self.startNode
             for i in range(1, index):
                 precedingNode = getattr(precedingNode, "next", None)
             node = getattr(precedingNode, "next", None)
@@ -120,22 +144,22 @@ class ADL_SinglyLinkedList:
 
 
     class Iterator:
-        def __init__(self, aList):
-            self.list = aList
+        def __init__(self, node):
+            self.node = node
 
         def __iter__(self):
             return self
 
         def __next__(self):
-            if self.list is None:
+            if self.node is None:
                 raise StopIteration
 
-            value = self.list.value
-            self.list = self.list.next
+            value = self.node.value
+            self.node = self.node.next
             return value
 
     def __iter__(self):
-        return self.Iterator(self.next)
+        return self.Iterator(self.startNode)
 
     def __str__(self):
         s = "["
