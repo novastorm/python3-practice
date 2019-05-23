@@ -186,6 +186,9 @@ class ADL_DoublyLinkedList:
 
         return node.value
 
+    def removeLast(self):
+        return self.remove(atIndex=self.count-1)
+
     
     def __getitem__(self, index):
         return self.getValue(index)
