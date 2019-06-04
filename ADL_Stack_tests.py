@@ -54,5 +54,11 @@ class test_ADL_DoublyLinkedList_Stack(Base_ADL_Stack_tests):
         self.stack = ADL_DoublyLinkedList_Stack()
 
 
+class test_ADL_List_Stack(Base_ADL_Stack_tests):
+
+    def setUp(self):
+        self.stack = ADL_List_Stack()
+
+
 if __name__ == '__main__':
     unittest.main()

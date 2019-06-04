@@ -51,3 +51,28 @@ class ADL_DoublyLinkedList_Stack(ADL_DoublyLinkedList, ADL_Stack):
             return None
         return self.removeLast()
 
+class ADL_List_Stack(list, ADL_Stack):
+    @property
+    def isEmpty(self):
+        return len(self) == 0
+    
+    @property
+    def count(self):
+        if self.isEmpty:
+            return 0
+        return self.__len__()
+    
+
+    @property
+    def peek(self):
+        if self.isEmpty:
+            return None
+        return self[-1]
+
+    def push(self, value):
+        self.append(value)
+
+    def pop(self):
+        if self.isEmpty:
+            return None
+        return super().pop(-1)
