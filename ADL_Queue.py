@@ -9,8 +9,7 @@ class ADL_Queue:
     def isEmpty(self):
         raise NotImplementedError
     
-    @property
-    def count(self):
+    def __len__(self):
         raise NotImplementedError
 
     @property
@@ -24,43 +23,47 @@ class ADL_Queue:
         raise NotImplementedError
 
 
-class ADL_SinglyLinkedList_Queue(ADL_SinglyLinkedList, ADL_Queue):
-    @property
-    def peek(self):
-        return self.head
+# class ADL_SinglyLinkedList_Queue(ADL_Queue):
+#     @property
+#     def peek(self):
+#         return self.head
 
-    def enqueue(self, value):
-        self.append(value)
+#     def enqueue(self, value):
+#         self.append(value)
 
-    def dequeue(self):
-        if self.isEmpty:
-            return None
-        return self.remove(atIndex=0)
+#     def dequeue(self):
+#         if self.isEmpty:
+#             return None
+#         return self.remove(atIndex=0)
 
 
-class ADL_DoublyLinkedList_Queue(ADL_DoublyLinkedList, ADL_Queue):
-    @property
-    def peek(self):
-        return self.first
+# class ADL_DoublyLinkedList_Queue(ADL_Queue):
+#     @property
+#     def peek(self):
+#         return self.first
 
-    def enqueue(self, value):
-        self.append(value)
+#     def enqueue(self, value):
+#         self.append(value)
 
-    def dequeue(self):
-        if self.isEmpty:
-            return None
-        return self.remove(atIndex=0)
+#     def dequeue(self):
+#         if self.isEmpty:
+#             return None
+#         return self.remove(atIndex=0)
 
-class ADL_List_Queue(list, ADL_Queue):
+
+class ADL_List_Queue(ADL_Queue):
+
+    def __init__(self):
+        self._list = []
+    
+
+    def __len__(self):
+        return len(self._list)
+
+
     @property
     def isEmpty(self):
         return len(self) == 0
-    
-    @property
-    def count(self):
-        if self.isEmpty:
-            return 0
-        return self.__len__()
     
 
     @property
@@ -69,10 +72,48 @@ class ADL_List_Queue(list, ADL_Queue):
             return None
         return self[0]
 
+
     def enqueue(self, value):
-        self.append(value)
+        self._list.append(value)
+
 
     def dequeue(self):
         if self.isEmpty:
             return None
-        return super().pop(0)
+        return self._list.pop(0)
+
+
+    def __getitem__(self, index):
+        assert 0 <= index and index < len(self), "index out of bounds"
+
+        return self._list[index]
+
+
+    def __setItem__(self, index, value):
+        assert 0 <= index and index < len(self), "index out of bounds"
+
+        oldValue = self._list[index]
+        self._list[index] = value
+
+        return oldValue
+
+
+    def __iter__(self):
+        return self._list.__iter__()
+
+
+    def isEqualToOther(self, other):
+        if len(self) != len(other):
+            return False
+
+        for l,r in zip(self, other):
+            if l != r: 
+                return False
+
+        return True
+
+    def __eq__(self, other):
+        if isinstance(other, ADL_Queue) or isinstance(other, list):
+            return self.isEqualToOther(other)
+
+        raise NotImplementedError

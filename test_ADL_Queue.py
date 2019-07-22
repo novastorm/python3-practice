@@ -18,26 +18,26 @@ class Base_ADL_Queue_tests(unittest.TestCase):
 
     def test_queue_initialization(self):
         self.assertTrue(self.queue.isEmpty)
-        self.assertEqual(self.queue.count, 0)
+        self.assertEqual(len(self.queue), 0)
         self.assertIsNone(self.queue.peek)
 
 
     def test_queue_enqueue(self):
         self.queue.enqueue(0)
         self.assertFalse(self.queue.isEmpty)
-        self.assertEqual(self.queue.count, 1)
+        self.assertEqual(len(self.queue), 1)
         self.assertEqual(self.queue.peek, 0)
         self.assertEqual(self.queue, [0])
 
         self.queue.enqueue(1)
         self.assertFalse(self.queue.isEmpty)
-        self.assertEqual(self.queue.count, 2)
+        self.assertEqual(len(self.queue), 2)
         self.assertEqual(self.queue.peek, 0)
         self.assertEqual(self.queue, [0, 1])
 
         self.queue.enqueue(2)
         self.assertFalse(self.queue.isEmpty)
-        self.assertEqual(self.queue.count, 3)
+        self.assertEqual(len(self.queue), 3)
         self.assertEqual(self.queue.peek, 0)
         self.assertEqual(self.queue, [0, 1, 2])
 
@@ -49,30 +49,30 @@ class Base_ADL_Queue_tests(unittest.TestCase):
 
         self.assertEqual(self.queue.peek, 0)
         self.assertEqual(self.queue.dequeue(), 0)
-        self.assertEqual(self.queue.count, 2)
+        self.assertEqual(len(self.queue), 2)
 
         self.assertEqual(self.queue.peek, 1)
         self.assertEqual(self.queue.dequeue(), 1)
-        self.assertEqual(self.queue.count, 1)
+        self.assertEqual(len(self.queue), 1)
 
         self.assertEqual(self.queue.peek, 2)
         self.assertEqual(self.queue.dequeue(), 2)
-        self.assertEqual(self.queue.count, 0)
+        self.assertEqual(len(self.queue), 0)
 
         self.assertIsNone(self.queue.peek)
 
 
 
-class test_ADL_SinglyLinkedList_Queue(Base_ADL_Queue_tests):
+# class test_ADL_SinglyLinkedList_Queue(Base_ADL_Queue_tests):
 
-    def setUp(self):
-        self.queue = ADL_SinglyLinkedList_Queue()
+#     def setUp(self):
+#         self.queue = ADL_SinglyLinkedList_Queue()
 
 
-class test_ADL_DoublyLinkedList_Queue(Base_ADL_Queue_tests):
+# class test_ADL_DoublyLinkedList_Queue(Base_ADL_Queue_tests):
 
-    def setUp(self):
-        self.queue = ADL_DoublyLinkedList_Queue()
+#     def setUp(self):
+#         self.queue = ADL_DoublyLinkedList_Queue()
 
 
 class test_ADL_List_Queue(Base_ADL_Queue_tests):
