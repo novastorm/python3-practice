@@ -1,42 +1,27 @@
 from os import abort
+from ADL_SinglyLinkedListNode import *
 
 class ADL_SinglyLinkedList:
     """Singly Linked List Implementation"""
 
-    def __init__(self, value):
-        self._next = None
-        self._value = value
-
-
-    @property
-    def value(self):
-        return self._value
-    @value.setter
-    def value(self, newValue):
-        self._value = newValue
-
-
-    @property
-    def next(self):
-        return self._next
-    @next.setter
-    def next(self, newValue):
-        self._next = newValue
+    def __init__(self):
+        self._head = None
+        self._last = None
 
 
     def __len__(self):
         """Return the number of nodes from this node"""
-        if self.next is None:
-            return 1
+        if self._head is None:
+            return 0
 
-        return 1 + self.next.__len__()
+        return len(self._head)
 
 
     def __str__(self):
         """Return the string description of this list"""
         s = "["
         sep = ""
-        for i in self:
+        for i in self._head:
             s += sep + str(i)
             sep = ", "
         s += "]"
@@ -46,16 +31,16 @@ class ADL_SinglyLinkedList:
     def __getitem__(self, index):
         assert 0 <= index and index < len(self), "index out of bounds"
 
-        nodeAtIndex = self
+        nodeAtIndex = self._head
         for i in range(index):
             nodeAtIndex = nodeAtIndex.next
 
-        return nodeAtIndex
+        return nodeAtIndex.value
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, index, value):
         assert 0 <= index and index < len(self), "index out of bounds"
 
-        nodeAtIndex = self
+        nodeAtIndex = self._head
         for i in range(index):
             nodeAtIndex = nodeAtIndex.next
 
@@ -79,92 +64,70 @@ class ADL_SinglyLinkedList:
 
     def __iter__(self):
         """Return an iterator"""
-        return self.Iterator(self)
+        return self.Iterator(self._head)
 
 
-    @staticmethod
-    def len(aList):
-        if aList is None:
-            return 0
-        return aList.__len__()
-
-
-    @staticmethod
-    def isEmpty(aList):
-        return aList is None
+    @property
+    def isEmpty(self):
+        return self._head is None
     
 
-    @staticmethod
-    def insertNode(aList, newNode, atIndex):
-        count = ADL_SinglyLinkedList.len(aList)
-        assert 0 <= atIndex and atIndex <= count, "index out of bounds"
+    def insertValue(self, value, atIndex):
+        assert 0 <= atIndex and atIndex <= len(self), "index out of bounds"
         index = atIndex
+        newNode = ADL_SinglyLinkedListNode(value)
+
+        node = self._head
 
         if index == 0:
-            newNode.next = aList
-            aList = newNode
+            newNode.next = node
+            self._head = newNode
         else:
-            nodeAtIndex = aList
+            nodeAtIndex = node
             for i in range(1, index):
                 nodeAtIndex = nodeAtIndex.next
             newNode.next = nodeAtIndex.next
             nodeAtIndex.next = newNode
 
-        return aList
+
+    def appendValue(self, value):
+        return self.insertValue(value, len(self))
 
 
-    @staticmethod
-    def appendNode(aList, newNode):
-        count = ADL_SinglyLinkedList.len(aList) or 0
-        return ADL_SinglyLinkedList.insertNode(aList, newNode, count)
-
-    @staticmethod
-    def getNode(aList, atIndex):
-        if aList is None:
+    def getValue(self, atIndex):
+        if self._head is None:
             raise AssertionError("Cannot get item from an empty Collection")
+        assert 0 <= atIndex and atIndex < len(self), "index out of bounds"
+
+        return self[atIndex]
+
+
+    def updateValue(self, value, atIndex):
+        if self._head is None:
+            raise AssertionError("Cannot update item in an empty Collection")
+        assert 0 <= atIndex and atIndex < len(self), "index out of bounds"
+
+        return self.__setitem__(atIndex, value)
+
+
+    def removeValue(self, atIndex):
         assert 0 <= atIndex and atIndex < len(self), "index out of bounds"
         index = atIndex
 
-        nodeAtIndex = self
-        for i in range(index):
-            nodeAtIndex = nodeAtIndex.next
-
-        return nodeAtIndex
-
-
-    @staticmethod
-    def removeNode(aList, atIndex):
-        count = ADL_SinglyLinkedList.len(aList) or 0
-        assert 0 <= atIndex and atIndex < count, "index out of bounds"
-        index = atIndex
-
-        node = aList
+        node = self._head
 
         if index == 0:
-            aList = getattr(node, "next", None)
+            self._head = getattr(node, "next", None)
         else:
-            precedingNode = aList
+            precedingNode = node
             for i in range(1, index):
                 precedingNode = precedingNode.next
 
             node = precedingNode.next
             precedingNode.next = node.next
 
-            # if index == self.count:
-            #     self.endNode = precedingNode
+        return node.value
 
-        return (aList, node)
-
-
-#     @property
-#     def tail(self):
-#         if self.count < 2:
-#             return None
-
-#         newList = ADL_SinglyLinkedList()
-#         newList.head = getattr(self.startNode, "next", None)
-#         return newList
-        
 
     def __eq__(self, other):
         if isinstance(other, ADL_SinglyLinkedList) \
