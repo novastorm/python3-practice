@@ -1,15 +1,16 @@
 from abc import ABCMeta, abstractmethod
 
-class BinaryTreeError(Exception):
-    """Base (catch-all) binarytree exception."""
-class NodeTypeError(BinaryTreeError):
-    """Node was not an instance of :class:`binarytree.Node`."""
-class NodeValueError(BinaryTreeError):
-    """Node value was not a valid."""
 
 
 class ADL_BinaryTree:
     '''BinaryTree Implementation'''
+
+    class BinaryTreeError(Exception):
+        """Base (catch-all) binarytree exception."""
+    class NodeTypeError(BinaryTreeError):
+        """Node was not an instance of :class:`binarytree.Node`."""
+    class NodeValueError(BinaryTreeError):
+        """Node value was not a valid."""
 
     @property
     def value(self):
@@ -38,9 +39,8 @@ class ADL_BinaryTree:
         self._right = newValue
 
     
-    @property
     def __len__(self):
-        return (self.left.__len__() if self.left else 0) + 1 + (self.right.__len__() if self.right else 0)
+        return (len(self.left) if self.left else 0) + 1 + (len(self.right) if self.right else 0)
 
 
     def __init__(self, value, left=None, right=None):
@@ -53,3 +53,9 @@ class ADL_BinaryTree:
         self.value = value
         self.left = left
         self.right = right
+
+
+    # def __iter__(self):
+    #     if self.left: yield from self.left
+    #     yield self.value
+    #     if self.right: yield from self.right
