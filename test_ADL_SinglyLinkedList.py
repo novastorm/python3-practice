@@ -6,7 +6,7 @@ class Test_SinglyLinkedList(unittest.TestCase):
     def setUp(self):
         self.list = ADL_SinglyLinkedList()
 
-    def teardown(self):
+    def tearDown(self):
         self.list = None
 
     def test_SinglyLinkedListInitialize(self):

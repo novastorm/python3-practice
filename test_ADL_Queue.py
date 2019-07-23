@@ -63,10 +63,10 @@ class Base_ADL_Queue_tests(unittest.TestCase):
 
 
 
-# class test_ADL_SinglyLinkedList_Queue(Base_ADL_Queue_tests):
+class test_ADL_SinglyLinkedList_Queue(Base_ADL_Queue_tests):
 
-#     def setUp(self):
-#         self.queue = ADL_SinglyLinkedList_Queue()
+    def setUp(self):
+        self.queue = ADL_SinglyLinkedList_Queue()
 
 
 # class test_ADL_DoublyLinkedList_Queue(Base_ADL_Queue_tests):

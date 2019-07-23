@@ -23,19 +23,57 @@ class ADL_Queue:
         raise NotImplementedError
 
 
-# class ADL_SinglyLinkedList_Queue(ADL_Queue):
-#     @property
-#     def peek(self):
-#         return self.head
+class ADL_SinglyLinkedList_Queue(ADL_Queue):
 
-#     def enqueue(self, value):
-#         self.append(value)
+    def __init__(self):
+        self._list = ADL_SinglyLinkedList()
+    
 
-#     def dequeue(self):
-#         if self.isEmpty:
-#             return None
-#         return self.remove(atIndex=0)
+    def __len__(self):
+        return len(self._list)
 
+
+    @property
+    def isEmpty(self):
+        return len(self) == 0
+    
+
+    @property
+    def peek(self):
+        if self.isEmpty:
+            return None
+        return self._list[0]
+
+
+    def enqueue(self, value):
+        self._list.appendValue(value)
+
+
+    def dequeue(self):
+        if self.isEmpty:
+            return None
+        return self._list.removeValue(atIndex=0)
+
+
+    def __iter__(self):
+        return self._list.__iter__()
+
+
+    def isEqualToOther(self, other):
+        if not isinstance(other, ADL_Queue) and not isinstance(other, list):
+            raise NotImplementedError
+
+        if len(self) != len(other):
+            return False
+
+        for l,r in zip(self, other):
+            if l != r: 
+                return False
+
+        return True
+
+    def __eq__(self, other):
+        return self.isEqualToOther(other)
 
 # class ADL_DoublyLinkedList_Queue(ADL_Queue):
 #     @property
@@ -70,7 +108,7 @@ class ADL_List_Queue(ADL_Queue):
     def peek(self):
         if self.isEmpty:
             return None
-        return self[0]
+        return self._list[0]
 
 
     def enqueue(self, value):
@@ -83,26 +121,14 @@ class ADL_List_Queue(ADL_Queue):
         return self._list.pop(0)
 
 
-    def __getitem__(self, index):
-        assert 0 <= index and index < len(self), "index out of bounds"
-
-        return self._list[index]
-
-
-    def __setItem__(self, index, value):
-        assert 0 <= index and index < len(self), "index out of bounds"
-
-        oldValue = self._list[index]
-        self._list[index] = value
-
-        return oldValue
-
-
     def __iter__(self):
         return self._list.__iter__()
 
 
     def isEqualToOther(self, other):
+        if not isinstance(other, ADL_Queue) and not isinstance(other, list):
+            raise NotImplementedError
+
         if len(self) != len(other):
             return False
 
@@ -113,7 +139,5 @@ class ADL_List_Queue(ADL_Queue):
         return True
 
     def __eq__(self, other):
-        if isinstance(other, ADL_Queue) or isinstance(other, list):
-            return self.isEqualToOther(other)
+        return self.isEqualToOther(other)
 
-        raise NotImplementedError
