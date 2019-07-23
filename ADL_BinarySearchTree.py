@@ -45,27 +45,26 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
 
     @property
     def preOrder(self):
-        # return ADL_BinaryTree.PreOrderIterator(self._root)
         return self._root.preOrder if self._root else []
 
     @property
     def inOrder(self):
-        # return ADL_BinaryTree.InOrderIterator(self._root)
         return self._root.inOrder if self._root else []
 
     @property
     def outOrder(self):
-        # return ADL_BinaryTree.OutOrderIterator(self._root)    
         return self._root.outOrder if self._root else []
 
 
     @property
     def postOrder(self):
-        # return ADL_BinaryTree.PostOrderIterator(self._root)
         return self._root.postOrder if self._root else []
 
     def __iter__(self):
         return self.inOrder
+
+    def __reversed__(self):
+        return self.outOrder
 
     def __str__(self):
         s = "["
