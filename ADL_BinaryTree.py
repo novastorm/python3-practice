@@ -210,3 +210,18 @@ class ADL_BinaryTree:
 
     def __reversed__(self):
         return self.outOrder
+
+    def isEqualToOther(self, other):
+        if not isinstance(other, ADL_BinaryTree):
+            raise NotImplementedError
+
+        for l,r in zip(self.breadthFirst, other.breadthFirst):
+            if l != r:
+                return False
+
+        return True
+
+
+    def __eq__(self, other):
+        return self.isEqualToOther(other)
+
