@@ -51,6 +51,8 @@ class Base_ADL_BinaryTree_tests(unittest.TestCase):
         for e in self.aBST.inOrder:
             print(e)
 
+        for e in self.aBST.preOrder:
+            print(e)
 
 if __name__ == '__main__':
     unittest.main()

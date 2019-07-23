@@ -70,6 +70,32 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
     def inOrder(self):
         return self.InOrderIterator(self._root)
 
+    class PreOrderIterator:
+        def __init__(self, node):
+            self.stack = []
+            self.stack.append(node)
+
+        def __iter__(self):
+            return self
+
+        def __next__(self):
+            if len(self.stack) == 0:
+                raise StopIteration
+
+            nextNode = self.stack.pop()
+
+            if nextNode.right is not None:
+                self.stack.append(nextNode.right)
+            if nextNode.left is not None:
+                self.stack.append(nextNode.left)
+
+            return nextNode.value
+
+    @property
+    def preOrder(self):
+        return self.PreOrderIterator(self._root)
+    
+
     def __iter__(self):
         return self.inOrder
 
