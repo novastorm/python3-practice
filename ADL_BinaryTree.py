@@ -1,16 +1,89 @@
 from abc import ABCMeta, abstractmethod
 
 
-
 class ADL_BinaryTree:
-    '''BinaryTree Implementation'''
 
     class BinaryTreeError(Exception):
         """Base (catch-all) binarytree exception."""
     class NodeTypeError(BinaryTreeError):
         """Node was not an instance of :class:`binarytree.Node`."""
     class NodeValueError(BinaryTreeError):
-        """Node value was not a valid."""
+        """Node value was not a valid."""    
+
+    def isEqualToOther(self, other):
+        if not isinstance(other, ADL_BinaryTree):
+            raise NotImplementedError
+
+        for l,r in zip(self.breadthFirst, other.breadthFirst):
+            if l != r:
+                return False
+
+        return True
+
+    def __eq__(self, other):
+        return self.isEqualToOther(other)
+    
+    def __len__(self):
+        return (len(self.left) if self.left else 0) + 1 + (len(self.right) if self.right else 0)
+
+
+    def __str__(self):
+        s = "["
+        sep = ""
+        for i in self:
+            s += sep + str(i)
+            sep = ", "
+        s += "]"
+        return s
+
+    def breadthFirst(self):
+        raise NotImplementedError
+
+    def preOrder(self):
+        raise NotImplementedError
+
+    def inOrder(self):
+        raise NotImplementedError
+
+    def outOrder(self):
+        raise NotImplementedError
+
+    def postOrder(self):
+        raise NotImplementedError
+
+    def __iter__(self):
+        return self.inOrder
+
+    def __reversed__(self):
+        return self.outOrder
+
+
+class ADL_BinaryTreeNode:
+
+    @property
+    def value(self):
+        raise NotImplementedError
+    @value.setter
+    def value(self, newValue):
+        raise NotImplementedError
+
+    @property
+    def left(self):
+        raise NotImplementedError
+    @left.setter
+    def left(self, newValue):
+        raise NotImplementedError
+
+    @property
+    def right(self):
+        raise NotImplementedError
+    @right.setter
+    def right(self, newValue):
+        raise NotImplementedError
+
+
+class ADL_BinaryTreeNode_Iterative(ADL_BinaryTreeNode, ADL_BinaryTree):
+    '''BinaryTree Implementation'''
 
     @property
     def value(self):
@@ -38,10 +111,6 @@ class ADL_BinaryTree:
             raise NodeTypeError('right child must be a ADL_BinaryTree instance')
         self._right = newValue
 
-    
-    def __len__(self):
-        return (len(self.left) if self.left else 0) + 1 + (len(self.right) if self.right else 0)
-
 
     def __init__(self, value, left=None, right=None):
 
@@ -54,9 +123,6 @@ class ADL_BinaryTree:
         self.left = left
         self.right = right
 
-
-    def __str__(self):
-        return self._value
 
     class BreadthFirstIterator:
         def __init__(self, node):
@@ -210,18 +276,3 @@ class ADL_BinaryTree:
 
     def __reversed__(self):
         return self.outOrder
-
-    def isEqualToOther(self, other):
-        if not isinstance(other, ADL_BinaryTree):
-            raise NotImplementedError
-
-        for l,r in zip(self.breadthFirst, other.breadthFirst):
-            if l != r:
-                return False
-
-        return True
-
-
-    def __eq__(self, other):
-        return self.isEqualToOther(other)
-

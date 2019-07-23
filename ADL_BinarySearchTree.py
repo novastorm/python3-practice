@@ -1,14 +1,10 @@
 from ADL_BinaryTree import *
 
-class ADL_BinarySearchTree:
+class ADL_BinarySearchTree(ADL_BinaryTree):
 
     @property
     def isEmpty(self):
         raise NotImplementedError
-
-    def __len__(self):
-        raise NotImplementedError
-
 
     def insertValue(self, value):
         raise NotImplementedError
@@ -22,20 +18,14 @@ class ADL_BinarySearchTree:
         raise NotImplementedError
 
 
-    def inorderTraversal(self, callback):
-        raise NotImplementedError
-
-
-    def outOrderTraversal(self, callback):
-        raise NotImplementedError
-
-
     @staticmethod
     def isBinarySearchTree(tree):
         raise NotImplementedError
 
 
 class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
+
+    Node = ADL_BinaryTreeNode_Iterative
 
     def __init__(self):
         self._root = None
@@ -44,7 +34,7 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
         return len(self._root) if self._root else 0
 
     @property
-    def breadthFirstOrder(self):
+    def breadthFirst(self):
         return self._root.breadthFirst if self._root else []
 
     @property
@@ -59,28 +49,13 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
     def outOrder(self):
         return self._root.outOrder if self._root else []
 
-
     @property
     def postOrder(self):
         return self._root.postOrder if self._root else []
 
-    def __iter__(self):
-        return self.inOrder
-
-    def __reversed__(self):
-        return self.outOrder
-
-    def __str__(self):
-        s = "["
-        sep = ""
-        for i in self:
-            s += sep + str(i)
-            sep = ", "
-        s += "]"
-        return s
 
     def insertValue(self, value):
-        node = ADL_BinaryTree(value)
+        node = self.Node(value)
 
         if self._root is None:
             self._root = node

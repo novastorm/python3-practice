@@ -58,6 +58,41 @@ class Base_ADL_BinarySearchTree_tests(unittest.TestCase):
         self.assertEqual(list(reversed(self.aBST)), [7, 6, 5, 4, 3, 2, 1])
 
 
+    def test_binarySearchTree_equality(self):
+        Node = ADL_BinaryTreeNode_Iterative
+        BST = ADL_BinarySearchTree_graph
+        
+        aBST = BST()
+        aBST.insertValue(4)
+        aBST.insertValue(2)
+        aBST.insertValue(1)
+        aBST.insertValue(3)
+        aBST.insertValue(6)
+        aBST.insertValue(5)
+        aBST.insertValue(7)
+
+
+        node1 = Node(1)
+        node3 = Node(3)
+        node5 = Node(5)
+        node7 = Node(7)
+
+        node2 = Node(2, node1, node3)
+        node6 = Node(6, node5, node7)
+
+        node4 = Node(4, node2, node6)
+
+        rootA = node4
+        rootB = node6
+        rootC = node2
+
+        self.assertTrue(rootA == aBST)
+        self.assertFalse(rootB == aBST)
+        self.assertFalse(rootC == aBST)
+        self.assertTrue(aBST == rootA)
+        self.assertFalse(aBST == rootB)
+        self.assertFalse(aBST == rootC)
+
 
 if __name__ == '__main__':
     unittest.main()

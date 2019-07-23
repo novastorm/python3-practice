@@ -4,15 +4,15 @@ from ADL_BinarySearchTree import *
 class Base_ADL_BinaryTree_tests(unittest.TestCase):
 
     def test_binaryTree_traversal(self):
-        node1 = ADL_BinaryTree(1)
-        node3 = ADL_BinaryTree(3)
-        node5 = ADL_BinaryTree(5)
-        node7 = ADL_BinaryTree(7)
+        node1 = ADL_BinaryTreeNode_Iterative(1)
+        node3 = ADL_BinaryTreeNode_Iterative(3)
+        node5 = ADL_BinaryTreeNode_Iterative(5)
+        node7 = ADL_BinaryTreeNode_Iterative(7)
 
-        node2 = ADL_BinaryTree(2, node1, node3)
-        node6 = ADL_BinaryTree(6, node5, node7)
+        node2 = ADL_BinaryTreeNode_Iterative(2, node1, node3)
+        node6 = ADL_BinaryTreeNode_Iterative(6, node5, node7)
 
-        node4 = ADL_BinaryTree(4, node2, node6)
+        node4 = ADL_BinaryTreeNode_Iterative(4, node2, node6)
 
         root = node4
 
@@ -31,15 +31,15 @@ class Base_ADL_BinaryTree_tests(unittest.TestCase):
 
 
     def test_binaryTree_equality(self):
-        node1 = ADL_BinaryTree(1)
-        node3 = ADL_BinaryTree(3)
-        node5 = ADL_BinaryTree(5)
-        node7 = ADL_BinaryTree(7)
+        node1 = ADL_BinaryTreeNode_Iterative(1)
+        node3 = ADL_BinaryTreeNode_Iterative(3)
+        node5 = ADL_BinaryTreeNode_Iterative(5)
+        node7 = ADL_BinaryTreeNode_Iterative(7)
 
-        node2 = ADL_BinaryTree(2, node1, node3)
-        node6 = ADL_BinaryTree(6, node5, node7)
+        node2 = ADL_BinaryTreeNode_Iterative(2, node1, node3)
+        node6 = ADL_BinaryTreeNode_Iterative(6, node5, node7)
 
-        node4 = ADL_BinaryTree(4, node2, node6)
+        node4 = ADL_BinaryTreeNode_Iterative(4, node2, node6)
 
         rootA = node4
         rootB = node6
