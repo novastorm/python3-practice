@@ -57,9 +57,9 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
 
             nextNode = self.stack.pop()
 
-            if nextNode.right is not None:
+            if nextNode.right: # is not None:
                 self.stack.append(nextNode.right)
-            if nextNode.left is not None:
+            if nextNode.left: # is not None:
                 self.stack.append(nextNode.left)
 
             return nextNode.value
@@ -72,7 +72,7 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
         def __init__(self, node):
             self.stack = []
             currNode = node
-            while currNode is not None:
+            while currNode: # is not None:
                 self.stack.append(currNode)
                 currNode = currNode._left
 
@@ -86,7 +86,7 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
             nextNode = self.stack.pop()
             currNode = nextNode.right
 
-            while currNode is not None:
+            while currNode: # is not None:
                 self.stack.append(currNode)
                 currNode = currNode.left
 
@@ -100,7 +100,7 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
         def __init__(self, node):
             self.stack = []
             currNode = node
-            while currNode is not None:
+            while currNode: # is not None:
                 self.stack.append(currNode)
                 currNode = currNode._right
 
@@ -114,7 +114,7 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
             nextNode = self.stack.pop()
             currNode = nextNode.left
 
-            while currNode is not None:
+            while currNode: # is not None:
                 self.stack.append(currNode)
                 currNode = currNode.right
 
