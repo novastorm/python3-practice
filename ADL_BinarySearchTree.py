@@ -44,6 +44,10 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
         return len(self._root) if self._root else 0
 
     @property
+    def breadthFirstOrder(self):
+        return self._root.breadthFirst if self._root else []
+
+    @property
     def preOrder(self):
         return self._root.preOrder if self._root else []
 

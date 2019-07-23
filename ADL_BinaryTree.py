@@ -58,6 +58,34 @@ class ADL_BinaryTree:
     def __str__(self):
         return self._value
 
+    class BreadthFirstIterator:
+        def __init__(self, node):
+            """Initialize the iterator"""
+            self.queue = []
+            self.queue.append(node)
+
+        def __iter__(self):
+            return self
+
+        def  __next__(self):
+            """Return the next value"""
+            if len(self.queue) == 0:
+                raise StopIteration
+            # dequeue the next node
+            nextNode = self.queue.pop(0)
+            # enqueue node's chilren to the queue
+            if nextNode.left:
+                self.queue.append(nextNode.left)
+            if nextNode.right:
+                self.queue.append(nextNode.right)
+            # return nextNode's value
+            return nextNode.value
+
+    @property
+    def breadthFirst(self):
+        return self.BreadthFirstIterator(self)
+
+
     class PreOrderIterator:
         def __init__(self, node):
             self.stack = []
@@ -176,3 +204,9 @@ class ADL_BinaryTree:
     @property
     def postOrder(self):
         return self.PostOrderIterator(self)
+
+    def __iter__(self):
+        return self.inOrder
+
+    def __reversed__(self):
+        return self.outOrder
