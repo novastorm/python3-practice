@@ -19,46 +19,39 @@ class Base_ADL_BinaryTree_tests(unittest.TestCase):
     def test_binarySearchTree_insert(self):
         self.aBST.insertValue(4)
         self.assertEqual(len(self.aBST), 1)
-        print(str(self.aBST))
+        self.assertEqual(list(self.aBST.inOrder), [4])
 
         self.aBST.insertValue(2)
         self.assertEqual(len(self.aBST), 2)
-        print(str(self.aBST))
+        self.assertEqual(list(self.aBST.inOrder), [2, 4])
 
         self.aBST.insertValue(1)
         self.assertEqual(len(self.aBST), 3)
-        print(str(self.aBST))
+        self.assertEqual(list(self.aBST.inOrder), [1, 2, 4])
 
         self.aBST.insertValue(3)
         self.assertEqual(len(self.aBST), 4)
-        print(str(self.aBST))
+        self.assertEqual(list(self.aBST.inOrder), [1, 2, 3, 4])
 
         self.aBST.insertValue(6)
         self.assertEqual(len(self.aBST), 5)
-        print(str(self.aBST))
+        self.assertEqual(list(self.aBST.inOrder), [1, 2, 3, 4, 6])
 
         self.aBST.insertValue(5)
         self.assertEqual(len(self.aBST), 6)
-        print(str(self.aBST))
+        self.assertEqual(list(self.aBST.inOrder), [1, 2, 3, 4, 5, 6])
 
         self.aBST.insertValue(7)
         self.assertEqual(len(self.aBST), 7)
-        print(str(self.aBST))
+        self.assertEqual(list(self.aBST.inOrder), [1, 2, 3, 4, 5, 6, 7])
 
-        for e in self.aBST:
-            print(e)
+        self.assertEqual(list(self.aBST.preOrder), [4, 2, 1, 3, 6, 5, 7])
 
-        print()
-        for e in self.aBST.preOrder:
-            print(e)
+        self.assertEqual(list(self.aBST.inOrder), [1, 2, 3, 4, 5, 6, 7])
 
-        print()
-        for e in self.aBST.inOrder:
-            print(e)
+        self.assertEqual(list(self.aBST.outOrder), [7, 6, 5, 4, 3, 2, 1])
 
-        print()
-        for e in self.aBST.outOrder:
-            print(e)
+        self.assertEqual(list(self.aBST.postOrder), [1, 3, 2, 5, 7, 6, 4])
 
 if __name__ == '__main__':
     unittest.main()

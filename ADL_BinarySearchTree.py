@@ -82,6 +82,7 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
         def __next__(self):
             if len(self.stack) == 0:
                 raise StopIteration
+
             nextNode = self.stack.pop()
             currNode = nextNode.right
 
@@ -109,6 +110,7 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
         def __next__(self):
             if len(self.stack) == 0:
                 raise StopIteration
+
             nextNode = self.stack.pop()
             currNode = nextNode.left
 
@@ -121,6 +123,44 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
     @property
     def outOrder(self):
         return self.OutOrderIterator(self._root)    
+
+    class PostOrderIterator:
+        def __init__(self, node):
+            self.stack = []
+            currNode = node
+            while currNode: # is not None:
+                if currNode.right: # is not None:
+                    self.stack.append(currNode.right)
+                self.stack.append(currNode)
+                currNode = currNode.left
+
+        def __iter__(self):
+            return self
+
+        def __next__(self):
+            if not self.stack: # is stack is empty
+                raise StopIteration
+
+            nextNode = self.stack.pop()
+
+            currNode = nextNode
+            if currNode.right and self.stack and currNode.right == self.stack[-1]:
+                self.stack.pop()
+                self.stack.append(currNode)
+                currNode = currNode.right
+                while currNode: # is not None:
+                    if currNode.right: # is not None:
+                        self.stack.append(currNode.right)
+                    self.stack.append(currNode)
+                    currNode = currNode.left
+                nextNode = self.stack.pop()
+
+            return nextNode.value
+
+
+    @property
+    def postOrder(self):
+        return self.PostOrderIterator(self._root)
 
     def __iter__(self):
         return self.inOrder

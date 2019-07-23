@@ -55,7 +55,5 @@ class ADL_BinaryTree:
         self.right = right
 
 
-    # def __iter__(self):
-    #     if self.left: yield from self.left
-    #     yield self.value
-    #     if self.right: yield from self.right
+    def __str__(self):
+        return self._value
