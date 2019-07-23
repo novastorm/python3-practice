@@ -62,31 +62,6 @@ class ADL_BinaryTreeNode:
 
     @property
     def value(self):
-        raise NotImplementedError
-    @value.setter
-    def value(self, newValue):
-        raise NotImplementedError
-
-    @property
-    def left(self):
-        raise NotImplementedError
-    @left.setter
-    def left(self, newValue):
-        raise NotImplementedError
-
-    @property
-    def right(self):
-        raise NotImplementedError
-    @right.setter
-    def right(self, newValue):
-        raise NotImplementedError
-
-
-class ADL_BinaryTreeNode_Iterative(ADL_BinaryTreeNode, ADL_BinaryTree):
-    '''BinaryTree Implementation'''
-
-    @property
-    def value(self):
         return self._value
     @value.setter
     def value(self, newValue):
@@ -111,6 +86,9 @@ class ADL_BinaryTreeNode_Iterative(ADL_BinaryTreeNode, ADL_BinaryTree):
             raise NodeTypeError('right child must be a ADL_BinaryTree instance')
         self._right = newValue
 
+
+class ADL_BinaryTreeNode_Iterative(ADL_BinaryTreeNode, ADL_BinaryTree):
+    '''BinaryTree Implementation'''
 
     def __init__(self, value, left=None, right=None):
 
