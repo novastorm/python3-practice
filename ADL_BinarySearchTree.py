@@ -43,124 +43,26 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
     def __len__(self):
         return len(self._root) if self._root else 0
 
-    class PreOrderIterator:
-        def __init__(self, node):
-            self.stack = []
-            self.stack.append(node)
-
-        def __iter__(self):
-            return self
-
-        def __next__(self):
-            if len(self.stack) == 0:
-                raise StopIteration
-
-            nextNode = self.stack.pop()
-
-            if nextNode.right: # is not None:
-                self.stack.append(nextNode.right)
-            if nextNode.left: # is not None:
-                self.stack.append(nextNode.left)
-
-            return nextNode.value
-
     @property
     def preOrder(self):
-        return self.PreOrderIterator(self._root)
-
-    class InOrderIterator:
-        def __init__(self, node):
-            self.stack = []
-            currNode = node
-            while currNode: # is not None:
-                self.stack.append(currNode)
-                currNode = currNode._left
-
-        def __iter__(self):
-            return self
-
-        def __next__(self):
-            if len(self.stack) == 0:
-                raise StopIteration
-
-            nextNode = self.stack.pop()
-            currNode = nextNode.right
-
-            while currNode: # is not None:
-                self.stack.append(currNode)
-                currNode = currNode.left
-
-            return nextNode.value
+        # return ADL_BinaryTree.PreOrderIterator(self._root)
+        return self._root.preOrder if self._root else []
 
     @property
     def inOrder(self):
-        return self.InOrderIterator(self._root)
-
-    class OutOrderIterator:
-        def __init__(self, node):
-            self.stack = []
-            currNode = node
-            while currNode: # is not None:
-                self.stack.append(currNode)
-                currNode = currNode._right
-
-        def __iter__(self):
-            return self
-
-        def __next__(self):
-            if len(self.stack) == 0:
-                raise StopIteration
-
-            nextNode = self.stack.pop()
-            currNode = nextNode.left
-
-            while currNode: # is not None:
-                self.stack.append(currNode)
-                currNode = currNode.right
-
-            return nextNode.value
+        # return ADL_BinaryTree.InOrderIterator(self._root)
+        return self._root.inOrder if self._root else []
 
     @property
     def outOrder(self):
-        return self.OutOrderIterator(self._root)    
-
-    class PostOrderIterator:
-        def __init__(self, node):
-            self.stack = []
-            currNode = node
-            while currNode: # is not None:
-                if currNode.right: # is not None:
-                    self.stack.append(currNode.right)
-                self.stack.append(currNode)
-                currNode = currNode.left
-
-        def __iter__(self):
-            return self
-
-        def __next__(self):
-            if not self.stack: # is stack is empty
-                raise StopIteration
-
-            nextNode = self.stack.pop()
-
-            currNode = nextNode
-            if currNode.right and self.stack and currNode.right == self.stack[-1]:
-                self.stack.pop()
-                self.stack.append(currNode)
-                currNode = currNode.right
-                while currNode: # is not None:
-                    if currNode.right: # is not None:
-                        self.stack.append(currNode.right)
-                    self.stack.append(currNode)
-                    currNode = currNode.left
-                nextNode = self.stack.pop()
-
-            return nextNode.value
+        # return ADL_BinaryTree.OutOrderIterator(self._root)    
+        return self._root.outOrder if self._root else []
 
 
     @property
     def postOrder(self):
-        return self.PostOrderIterator(self._root)
+        # return ADL_BinaryTree.PostOrderIterator(self._root)
+        return self._root.postOrder if self._root else []
 
     def __iter__(self):
         return self.inOrder
