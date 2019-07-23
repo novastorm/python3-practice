@@ -43,6 +43,31 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
     def __len__(self):
         return len(self._root) if self._root else 0
 
+    class PreOrderIterator:
+        def __init__(self, node):
+            self.stack = []
+            self.stack.append(node)
+
+        def __iter__(self):
+            return self
+
+        def __next__(self):
+            if len(self.stack) == 0:
+                raise StopIteration
+
+            nextNode = self.stack.pop()
+
+            if nextNode.right is not None:
+                self.stack.append(nextNode.right)
+            if nextNode.left is not None:
+                self.stack.append(nextNode.left)
+
+            return nextNode.value
+
+    @property
+    def preOrder(self):
+        return self.PreOrderIterator(self._root)
+
     class InOrderIterator:
         def __init__(self, node):
             self.stack = []
@@ -70,10 +95,13 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
     def inOrder(self):
         return self.InOrderIterator(self._root)
 
-    class PreOrderIterator:
+    class OutOrderIterator:
         def __init__(self, node):
             self.stack = []
-            self.stack.append(node)
+            currNode = node
+            while currNode is not None:
+                self.stack.append(currNode)
+                currNode = currNode._right
 
         def __iter__(self):
             return self
@@ -81,20 +109,18 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
         def __next__(self):
             if len(self.stack) == 0:
                 raise StopIteration
-
             nextNode = self.stack.pop()
+            currNode = nextNode.left
 
-            if nextNode.right is not None:
-                self.stack.append(nextNode.right)
-            if nextNode.left is not None:
-                self.stack.append(nextNode.left)
+            while currNode is not None:
+                self.stack.append(currNode)
+                currNode = currNode.right
 
             return nextNode.value
 
     @property
-    def preOrder(self):
-        return self.PreOrderIterator(self._root)
-    
+    def outOrder(self):
+        return self.OutOrderIterator(self._root)    
 
     def __iter__(self):
         return self.inOrder
