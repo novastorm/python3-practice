@@ -17,6 +17,8 @@ class Base_ADL_BinaryTree_tests(unittest.TestCase):
 
         root = node4
 
+        self.assertEqual(len(root), 7)
+
         self.assertEqual(list(root.breadthFirst), [4, 2, 6, 1, 3, 5, 7])
 
         self.assertEqual(list(root.preOrder), [4, 2, 1, 3, 6, 5, 7])

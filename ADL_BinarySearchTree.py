@@ -81,3 +81,4 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
 
 class ADL_BinarySearchTree_list(ADL_BinarySearchTree):
     pass
+
