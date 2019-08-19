@@ -64,7 +64,7 @@ class ADL_DoublyLinkedList:
     @property
     def isEmpty(self):
         return self.startNode is None
-    
+
 
     @property
     def first(self):
@@ -89,7 +89,7 @@ class ADL_DoublyLinkedList:
         newList = ADL_DoublyLinkedList()
         newList.head = getattr(self.startNode, "next", None)
         return newList
-        
+
 
     def insert(self, value, atIndex):
         assert 0 <= atIndex and atIndex <= self.count, "index out of bounds"
@@ -186,7 +186,7 @@ class ADL_DoublyLinkedList:
     def removeLast(self):
         return self.remove(atIndex=self.count-1)
 
-    
+
     def __getitem__(self, index):
         return self.getValue(index)
 
@@ -227,7 +227,7 @@ class ADL_DoublyLinkedList:
             or isinstance(other, list):
 
             return self.isEqualToOther(other)
-            
+
         raise NotImplementedError
 
 
