@@ -99,12 +99,12 @@ class ADL_DoublyLinkedList:
         newNode = self.Node()
         newNode.value = value
 
+        if index == self.count:
+            self.endNode = newNode
+
         if index == 0:
             if self.startNode is not None:
                 self.startNode.previous = newNode
-
-            if self.isEmpty:
-                self.endNode = newNode
 
             newNode.next = self.startNode
             self.startNode = newNode
@@ -116,9 +116,6 @@ class ADL_DoublyLinkedList:
             nextNode = nodeAtIndex.next
             if nextNode is not None:
                 nextNode.previous = newNode
-
-            if index == self.count:
-                self.endNode = newNode
 
             newNode.next = nodeAtIndex.next
             newNode.previous = nodeAtIndex
