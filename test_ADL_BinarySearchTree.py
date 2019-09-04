@@ -14,6 +14,7 @@ class Base_ADL_BinarySearchTree_tests(unittest.TestCase):
     def test_binarySearchTree_initialize(self):
         self.assertTrue(isinstance(self.aBST, ADL_BinarySearchTree))
         self.assertEqual(len(self.aBST), 0)
+        self.assertEqual(list(self.aBST), [])
 
 
     def test_binarySearchTree_insert(self):
@@ -92,6 +93,145 @@ class Base_ADL_BinarySearchTree_tests(unittest.TestCase):
         self.assertTrue(aBST == rootA)
         self.assertFalse(aBST == rootB)
         self.assertFalse(aBST == rootC)
+
+
+    def test_BSTGraph_findNodeRecursive(self):
+        aBST = ADL_BinarySearchTree_graph()
+
+        aBST.insertValue(4)
+        aBST.insertValue(2)
+        aBST.insertValue(1)
+        aBST.insertValue(3)
+        aBST.insertValue(6)
+        aBST.insertValue(5)
+        aBST.insertValue(7)
+
+        self.assertTrue(aBST._findNodeRecursive(aBST._root, 4))
+        self.assertTrue(aBST._findNodeRecursive(aBST._root, 1))
+        self.assertTrue(aBST._findNodeRecursive(aBST._root, 3))
+        self.assertTrue(aBST._findNodeRecursive(aBST._root, 5))
+        self.assertTrue(aBST._findNodeRecursive(aBST._root, 6))
+        self.assertTrue(aBST._findNodeRecursive(aBST._root, 7))
+
+        self.assertFalse(aBST._findNodeRecursive(aBST._root, 0))
+        self.assertFalse(aBST._findNodeRecursive(aBST._root, 8))
+
+
+    def test_BSTGraph_findNodeIterative(self):
+        aBST = ADL_BinarySearchTree_graph()
+
+        aBST.insertValue(4)
+        aBST.insertValue(2)
+        aBST.insertValue(1)
+        aBST.insertValue(3)
+        aBST.insertValue(6)
+        aBST.insertValue(5)
+        aBST.insertValue(7)
+
+        self.assertTrue(aBST._findNodeIterative(aBST._root, 4))
+        self.assertTrue(aBST._findNodeIterative(aBST._root, 1))
+        self.assertTrue(aBST._findNodeIterative(aBST._root, 3))
+        self.assertTrue(aBST._findNodeIterative(aBST._root, 5))
+        self.assertTrue(aBST._findNodeIterative(aBST._root, 6))
+        self.assertTrue(aBST._findNodeIterative(aBST._root, 7))
+
+        self.assertFalse(aBST._findNodeIterative(aBST._root, 0))
+        self.assertFalse(aBST._findNodeIterative(aBST._root, 8))
+
+
+    def test_BSTGraph_find(self):
+        aBST = ADL_BinarySearchTree_graph()
+
+        aBST.insertValue(4)
+        aBST.insertValue(2)
+        aBST.insertValue(1)
+        aBST.insertValue(3)
+        aBST.insertValue(6)
+        aBST.insertValue(5)
+        aBST.insertValue(7)
+
+        self.assertTrue(aBST.findValue(4))
+        self.assertTrue(aBST.findValue(1))
+        self.assertTrue(aBST.findValue(3))
+        self.assertTrue(aBST.findValue(5))
+        self.assertTrue(aBST.findValue(6))
+        self.assertTrue(aBST.findValue(7))
+
+        self.assertFalse(aBST.findValue(0))
+        self.assertFalse(aBST.findValue(8))
+
+
+    def test_BSTGraph_empty_remove(self):
+        aBST = ADL_BinarySearchTree_graph()
+
+        with self.assertRaises(ValueError):
+            aBST.removeValue(0)
+
+
+    def test_BSTGraph_one_value_remove(self):
+        # print()
+        aBST = ADL_BinarySearchTree_graph()
+
+        aBST.insertValue(8)
+        # print(aBST)
+
+        aBST.removeValue(8)
+        # print(aBST)
+
+
+    def test_BSTGraph_remove_root(self):
+        # print()
+        aBST = ADL_BinarySearchTree_graph()
+
+        aBST.insertValue(8)
+        aBST.insertValue(4)
+        aBST.insertValue(12)
+        aBST.insertValue(10)
+        aBST.insertValue(11)
+        aBST.insertValue(14)
+
+        # print(aBST)
+
+        aBST.removeValue(8)
+
+        # print(aBST)
+
+
+    def test_BSTGraph_remove_subnode_1(self):
+        # print()
+        aBST = ADL_BinarySearchTree_graph()
+
+        aBST.insertValue(8)
+        aBST.insertValue(4)
+        aBST.insertValue(12)
+        aBST.insertValue(14)
+        aBST.insertValue(13)
+        aBST.insertValue(15)
+
+        # print(aBST)
+
+        aBST.removeValue(12)
+
+        # print(aBST)
+
+
+    def test_BSTGraph_remove_subnode_2(self):
+        # print()
+        aBST = ADL_BinarySearchTree_graph()
+
+        aBST.insertValue(8)
+        aBST.insertValue(4)
+        aBST.insertValue(12)
+        aBST.insertValue(10)
+        aBST.insertValue(11)
+        aBST.insertValue(14)
+        aBST.insertValue(15)
+
+        # print(aBST)
+
+        aBST.removeValue(12)
+
+        # print(aBST)
 
 
 if __name__ == '__main__':

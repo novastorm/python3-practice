@@ -1,11 +1,17 @@
-from abc import ABCMeta, abstractmethod
-
 class BinaryTreeError(Exception):
     """Base (catch-all) binarytree exception."""
+    pass
+
+
 class NodeTypeError(BinaryTreeError):
     """Node was not an instance of :class:`binarytree.Node`."""
+    pass
+
+
 class NodeValueError(BinaryTreeError):
-    """Node value was not a valid."""    
+    """Node value was not a valid."""
+    pass
+
 
 class ADL_BinaryTree:
 
@@ -13,8 +19,8 @@ class ADL_BinaryTree:
         if not isinstance(other, ADL_BinaryTree):
             raise NotImplementedError
 
-        for l,r in zip(self.breadthFirst, other.breadthFirst):
-            if l != r:
+        for leftList, rightList in zip(self.breadthFirst, other.breadthFirst):
+            if leftList != rightList:
                 return False
 
         return True
@@ -61,14 +67,15 @@ class ADL_BinaryTreeNode:
     @property
     def value(self):
         return self._value
+
     @value.setter
     def value(self, newValue):
         self._value = newValue
 
-
     @property
     def left(self):
         return self._left
+
     @left.setter
     def left(self, newValue):
         if newValue is not None and not isinstance(newValue, ADL_BinaryTree):
@@ -78,6 +85,7 @@ class ADL_BinaryTreeNode:
     @property
     def right(self):
         return self._right
+
     @right.setter
     def right(self, newValue):
         if newValue is not None and not isinstance(newValue, ADL_BinaryTree):
@@ -116,14 +124,14 @@ class ADL_BinaryTreeNode_Iterative(ADL_BinaryTreeNode, ADL_BinaryTree):
             """Return the next value"""
             if len(self.queue) == 0:
                 raise StopIteration
-            # dequeue the next node
+
             nextNode = self.queue.pop(0)
-            # enqueue node's chilren to the queue
+
             if nextNode.left:
                 self.queue.append(nextNode.left)
             if nextNode.right:
                 self.queue.append(nextNode.right)
-            # return nextNode's value
+
             return nextNode.value
 
     @property
@@ -159,10 +167,11 @@ class ADL_BinaryTreeNode_Iterative(ADL_BinaryTreeNode, ADL_BinaryTree):
     class InOrderIterator:
         def __init__(self, node):
             self.stack = []
+
             currNode = node
             while currNode: # is not None:
                 self.stack.append(currNode)
-                currNode = currNode._left
+                currNode = currNode.left
 
         def __iter__(self):
             return self
@@ -172,8 +181,8 @@ class ADL_BinaryTreeNode_Iterative(ADL_BinaryTreeNode, ADL_BinaryTree):
                 raise StopIteration
 
             nextNode = self.stack.pop()
-            currNode = nextNode.right
 
+            currNode = nextNode.right
             while currNode: # is not None:
                 self.stack.append(currNode)
                 currNode = currNode.left
@@ -187,10 +196,11 @@ class ADL_BinaryTreeNode_Iterative(ADL_BinaryTreeNode, ADL_BinaryTree):
     class OutOrderIterator:
         def __init__(self, node):
             self.stack = []
+
             currNode = node
             while currNode: # is not None:
                 self.stack.append(currNode)
-                currNode = currNode._right
+                currNode = currNode.right
 
         def __iter__(self):
             return self
@@ -200,8 +210,8 @@ class ADL_BinaryTreeNode_Iterative(ADL_BinaryTreeNode, ADL_BinaryTree):
                 raise StopIteration
 
             nextNode = self.stack.pop()
-            currNode = nextNode.left
 
+            currNode = nextNode.left
             while currNode: # is not None:
                 self.stack.append(currNode)
                 currNode = currNode.right
@@ -210,51 +220,45 @@ class ADL_BinaryTreeNode_Iterative(ADL_BinaryTreeNode, ADL_BinaryTree):
 
     @property
     def outOrder(self):
-        return self.OutOrderIterator(self)    
+        return self.OutOrderIterator(self)
 
     class PostOrderIterator:
+
+        def insertNodes(self, node):
+            currNode = node
+            while currNode:
+                if currNode.right :  # is not None:
+                    self.stack.append(currNode.right)
+
+                self.stack.append(currNode)
+
+                currNode = currNode.left
+
+
         def __init__(self, node):
             self.stack = []
-            # print(list(map(lambda x: x.value, self.stack)))
-            currNode = node
-            while currNode: # is not None:
-                if currNode.right: # is not None:
-                    self.stack.append(currNode.right)
-                    # print("push", currNode.right.value, list(map(lambda x: x.value, self.stack)))
-                self.stack.append(currNode)
-                # print("push", currNode.value, list(map(lambda x: x.value, self.stack)))
-                currNode = currNode.left
+
+            self.insertNodes(node)
 
         def __iter__(self):
             return self
 
         def __next__(self):
-            # print(list(map(lambda x: x.value, self.stack)))
-            if not self.stack: # is stack is empty
+            if not self.stack:
                 raise StopIteration
 
             nextNode = self.stack.pop()
-            # print("pop", nextNode.value, list(map(lambda x: x.value, self.stack)))
 
             currNode = nextNode
             if currNode.right and self.stack and currNode.right == self.stack[-1]:
                 result = self.stack.pop()
-                # print("pop", result.value, list(map(lambda x: x.value, self.stack)))
+
                 self.stack.append(currNode)
-                # print("push", currNode.value, list(map(lambda x: x.value, self.stack)))
-                currNode = currNode.right
-                while currNode: # is not None:
-                    if currNode.right: # is not None:
-                        self.stack.append(currNode.right)
-                        # print("push", currNode.right.value, list(map(lambda x: x.value, self.stack)))
-                    self.stack.append(currNode)
-                    # print("push", currNode.value, list(map(lambda x: x.value, self.stack)))
-                    currNode = currNode.left
+                
+                self.insertNodes(currNode.right)
+
                 nextNode = self.stack.pop()
-                # print("pop", nextNode.value, list(map(lambda x: x.value, self.stack)))
 
-
-            # print(">>", nextNode.value)
             return nextNode.value
 
 
@@ -267,49 +271,3 @@ class ADL_BinaryTreeNode_Iterative(ADL_BinaryTreeNode, ADL_BinaryTree):
 
     def __reversed__(self):
         return self.outOrder
-
-        
-'''
-[]
-push 6 [6]
-push 4 [6, 4]
-push 3 [6, 4, 3]
-push 2 [6, 4, 3, 2]
-push 1 [6, 4, 3, 2, 1]
-[6, 4, 3, 2, 1]
-pop 1 [6, 4, 3, 2]
->> 1
-[6, 4, 3, 2]
-pop 2 [6, 4, 3]
-pop 3 [6, 4]
-push 2 [6, 4, 2]
-push 3 [6, 4, 2, 3]
-pop 3 [6, 4, 2]
->> 3
-[6, 4, 2]
-pop 2 [6, 4]
->> 2
-[6, 4]
-pop 4 [6]
-pop 6 []
-push 4 [4]
-push 7 [4, 7]
-push 6 [4, 7, 6]
-push 5 [4, 7, 6, 5]
-pop 5 [4, 7, 6]
->> 5
-[4, 7, 6]
-pop 6 [4, 7]
-pop 7 [4]
-push 6 [4, 6]
-push 7 [4, 6, 7]
-pop 7 [4, 6]
->> 7
-[4, 6]
-pop 6 [4]
->> 6
-[4]
-pop 4 []
->> 4
-[]
-'''
