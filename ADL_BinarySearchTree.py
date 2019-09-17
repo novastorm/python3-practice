@@ -137,7 +137,6 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
             pass
 
         deletionTargetParentNode = None # if none means self._root node
-        isDeletionTargetParentNodeLeftChild = None
         deletionTargetNode = self._root
 
         replacementNodeParent = None
@@ -161,31 +160,25 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
             # print("No children")
             if deletionTargetParentNode is None:
                 self._root = None
-            elif isDeletionTargetParentNodeLeftChild:
-                deletionTargetParentNode.left = None
             else:
                 deletionTargetParentNode.right = None
         elif deletionTargetNode.left and not deletionTargetNode.right:
             # print("left child only")
             if deletionTargetParentNode is None:
                 self._root = self._root.left
-            elif isDeletionTargetParentNodeLeftChild:
-                deletionTargetParentNode.left = deletionTargetNode.left
             else:
                 deletionTargetParentNode.right = deletionTargetNode.left
         elif not deletionTargetNode.left and deletionTargetNode.right:
             # print("right child only")
             if deletionTargetParentNode is None:
                 self._root = self._root.right
-            elif isDeletionTargetParentNodeLeftChild:
-                deletionTargetParentNode.left = deletionTargetNode.right
             else:
                 deletionTargetParentNode.right = deletionTargetNode.right
         else:
             # in right node, find left most node
             # print("left and right child")
             replacementNode = deletionTargetNode.right
-            if not replacementNode.left:
+            if replacementNode.right:
                 # print("RN: ", replacementNode.value)
                 if deletionTargetParentNode is None:
                     self._root.value = replacementNode.value
