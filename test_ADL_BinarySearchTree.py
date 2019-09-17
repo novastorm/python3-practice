@@ -227,11 +227,11 @@ class Base_ADL_BinarySearchTree_tests(unittest.TestCase):
         aBST.insertValue(14)
         aBST.insertValue(15)
 
-        # print(aBST)
+        # print(list(aBST.graphRepresentation))
 
         aBST.removeValue(12)
 
-        # print(aBST)
+        # print(list(aBST.graphRepresentation))
 
 
 if __name__ == '__main__':

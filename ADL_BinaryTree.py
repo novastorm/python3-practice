@@ -61,6 +61,8 @@ class ADL_BinaryTree:
     def __reversed__(self):
         return self.outOrder
 
+    def graphRepresentation(self):
+        raise NotImplementedError
 
 class ADL_BinaryTreeNode:
 
@@ -271,3 +273,31 @@ class ADL_BinaryTreeNode_Iterative(ADL_BinaryTreeNode, ADL_BinaryTree):
 
     def __reversed__(self):
         return self.outOrder
+
+
+
+    class GraphRepresentationIterator:
+        def __init__(self, node):
+            """Initialize the iterator"""
+            self.queue = [(0, node)]
+
+        def __iter__(self):
+            return self
+
+        def  __next__(self):
+            """Return the next value"""
+            if len(self.queue) == 0:
+                raise StopIteration
+
+            i, nextNode = self.queue.pop(0)
+
+            if nextNode.left:
+                self.queue.append((2 * i + 1, nextNode.left))
+            if nextNode.right:
+                self.queue.append((2 * i + 2, nextNode.right))
+
+            return (i, nextNode.value)
+
+    @property
+    def graphRepresentation(self):
+        return self.GraphRepresentationIterator(self)

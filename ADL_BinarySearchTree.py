@@ -53,6 +53,10 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
     def postOrder(self):
         return self._root.postOrder if self._root else iter([])
 
+    @property
+    def graphRepresentation(self):
+        return self._root.graphRepresentation if self._root else iter([])
+
 
     def insertValue(self, value):
 
@@ -150,10 +154,8 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
 
             deletionTargetParentNode = deletionTargetNode
             if deletionTargetNode.value < value:
-                isParentNodeLeft = False
                 deletionTargetNode = deletionTargetNode.right
             else:
-                isParentNodeLeft = True
                 deletionTargetNode = deletionTargetNode.left
 
         if not deletionTargetNode.left and not deletionTargetNode.right:
@@ -176,10 +178,8 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
                 deletionTargetParentNode.right = deletionTargetNode.right
         else:
             # in right node, find left most node
-            # print("left and right child")
             replacementNode = deletionTargetNode.right
             if replacementNode.right:
-                # print("RN: ", replacementNode.value)
                 if deletionTargetParentNode is None:
                     self._root.value = replacementNode.value
                     self._root.right = replacementNode.right
@@ -189,9 +189,7 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
             else:
                 replacementNodeParent = deletionTargetNode.right
                 replacementNode = replacementNodeParent.left
-                # print("RNP: ", replacementNodeParent.value, "RN: ", replacementNode.value)
                 while replacementNode.left:
-                    # print("RN: ", replacementNode, "RN-L: ", replacementNode.left)
                     replacementNodeParent = replacementNode
                     replacementNode = replacementNode.left
 
