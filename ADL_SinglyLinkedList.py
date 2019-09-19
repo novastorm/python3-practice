@@ -72,9 +72,9 @@ class ADL_SinglyLinkedList:
         return self._startNode is None
     
 
-    def insertValue(self, value, atIndex):
-        assert 0 <= atIndex and atIndex <= len(self), "index out of bounds"
-        index = atIndex
+    def insertValueAtIndex(self, value, index):
+        assert 0 <= index and index <= len(self), "index out of bounds"
+
         newNode = ADL_SinglyLinkedListNode(value)
 
         node = self._startNode
@@ -105,25 +105,25 @@ class ADL_SinglyLinkedList:
         self._endNode = newNode
 
 
-    def getValue(self, atIndex):
+    def getValueAtIndex(self, index):
         if self._startNode is None:
             raise AssertionError("Cannot get item from an empty Collection")
-        assert 0 <= atIndex and atIndex < len(self), "index out of bounds"
+        assert 0 <= index and index < len(self), "index out of bounds"
 
-        return self[atIndex]
+        return self[index]
 
 
-    def updateValue(self, value, atIndex):
+    def updateValueAtIndex(self, value, index):
         if self._startNode is None:
             raise AssertionError("Cannot update item in an empty Collection")
-        assert 0 <= atIndex and atIndex < len(self), "index out of bounds"
+        assert 0 <= index and index < len(self), "index out of bounds"
 
-        return self.__setitem__(atIndex, value)
+        return self.__setitem__(index, value)
 
 
-    def removeValue(self, atIndex):
-        assert 0 <= atIndex and atIndex < len(self), "index out of bounds"
-        index = atIndex
+    def removeValueAtIndex(self, index):
+        assert 0 <= index and index < len(self), "index out of bounds"
+        index = index
 
         node = self._startNode
 
