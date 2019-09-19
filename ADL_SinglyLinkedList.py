@@ -123,13 +123,12 @@ class ADL_SinglyLinkedList:
 
     def removeValueAtIndex(self, index):
         assert 0 <= index and index < len(self), "index out of bounds"
-        index = index
 
         node = self._startNode
 
         if index == 0:
             self._startNode = getattr(node, "next", None)
-            if index == len(self)-1:
+            if index == len(self) - 1:
                 self._endNode = None
         else:
             precedingNode = node
@@ -139,7 +138,7 @@ class ADL_SinglyLinkedList:
             node = precedingNode.next
             precedingNode.next = node.next
 
-            if index == len(self)-1:
+            if index == len(self) - 1:
                 self._endNode = precedingNode
 
         return node.value
