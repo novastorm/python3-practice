@@ -47,16 +47,7 @@ class Base_ADL_NTree_tests(unittest.TestCase):
 
         # self.assertEqual(list(root.outOrder), [7, 6, 5, 4, 3, 2, 1])
 
-        it = root.postOrder
-        print("s", [n.value for n in it.stack])
-        print(next(it))
-        print("s", [n.value for n in it.stack])
-        print(next(it))
-        print("s", [n.value for n in it.stack])
-        print(next(it))
-        print("s", [n.value for n in it.stack])
-
-        # self.assertEqual(list(root.postOrder), [3, 2, 1])
+        self.assertEqual(list(root.postOrder), [3, 2, 1])
 
         # self.assertEqual(list(root), [1, 2, 3, 4, 5, 6, 7])
         # self.assertEqual(list(reversed(root)), [7, 6, 5, 4, 3, 2, 1])
@@ -81,22 +72,6 @@ class Base_ADL_NTree_tests(unittest.TestCase):
         # self.assertEqual(list(root.inOrder), [1, 2, 3, 4, 5, 6, 7])
 
         # self.assertEqual(list(root.outOrder), [7, 6, 5, 4, 3, 2, 1])
-
-        it = root.postOrder
-        print("s", [n.value for n in it.stack])
-
-        print(next(it))
-        print("s", [n.value for n in it.stack])
-        print(next(it))
-        print("s", [n.value for n in it.stack])
-        print(next(it))
-        print("s", [n.value for n in it.stack])
-        print(next(it))
-        print("s", [n.value for n in it.stack])
-        print(next(it))
-        print("s", [n.value for n in it.stack])
-        print(next(it))
-        print("s", [n.value for n in it.stack])
 
         self.assertEqual(list(root.postOrder), [5, 0, 10, 6, 3, 1])
 
