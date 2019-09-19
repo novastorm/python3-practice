@@ -30,6 +30,80 @@ class Base_ADL_NTree_tests(unittest.TestCase):
         # self.assertEqual(list(reversed(root)), [7, 6, 5, 4, 3, 2, 1])
 
 
+    def test_NTree_traversal_2(self):
+        node3 = self.Node(3)
+        node2 = self.Node(2, [node3])
+        node1 = self.Node(1, [node2])
+
+        root = node1
+
+        self.assertEqual(len(root), 3)
+
+        self.assertEqual(list(root.breadthFirst), [1, 2, 3])
+
+        # self.assertEqual(list(root.preOrder), [4, 2, 1, 3, 6, 5, 7])
+
+        # self.assertEqual(list(root.inOrder), [1, 2, 3, 4, 5, 6, 7])
+
+        # self.assertEqual(list(root.outOrder), [7, 6, 5, 4, 3, 2, 1])
+
+        it = root.postOrder
+        print("s", [n.value for n in it.stack])
+        print(next(it))
+        print("s", [n.value for n in it.stack])
+        print(next(it))
+        print("s", [n.value for n in it.stack])
+        print(next(it))
+        print("s", [n.value for n in it.stack])
+
+        # self.assertEqual(list(root.postOrder), [3, 2, 1])
+
+        # self.assertEqual(list(root), [1, 2, 3, 4, 5, 6, 7])
+        # self.assertEqual(list(reversed(root)), [7, 6, 5, 4, 3, 2, 1])
+
+
+    def test_NTree_traversal_3(self):
+        node6 = self.Node(6)
+        node0 = self.Node(0)
+        node5 = self.Node(5)
+        node3 = self.Node(3, [node6])
+        node10 = self.Node(10, [node5, node0])
+        node1 = self.Node(1, [node10, node3])
+
+        root = node1
+
+        self.assertEqual(len(root), 6)
+
+        self.assertEqual(list(root.breadthFirst), [1, 10, 3, 5, 0, 6])
+
+        # self.assertEqual(list(root.preOrder), [4, 2, 1, 3, 6, 5, 7])
+
+        # self.assertEqual(list(root.inOrder), [1, 2, 3, 4, 5, 6, 7])
+
+        # self.assertEqual(list(root.outOrder), [7, 6, 5, 4, 3, 2, 1])
+
+        it = root.postOrder
+        print("s", [n.value for n in it.stack])
+
+        print(next(it))
+        print("s", [n.value for n in it.stack])
+        print(next(it))
+        print("s", [n.value for n in it.stack])
+        print(next(it))
+        print("s", [n.value for n in it.stack])
+        print(next(it))
+        print("s", [n.value for n in it.stack])
+        print(next(it))
+        print("s", [n.value for n in it.stack])
+        print(next(it))
+        print("s", [n.value for n in it.stack])
+
+        self.assertEqual(list(root.postOrder), [5, 0, 10, 6, 3, 1])
+
+        # self.assertEqual(list(root), [1, 2, 3, 4, 5, 6, 7])
+        # self.assertEqual(list(reversed(root)), [7, 6, 5, 4, 3, 2, 1])
+
+
     # def test_NTree_equality(self):
     #     node1 = self.Node(1)
     #     node3 = self.Node(3)

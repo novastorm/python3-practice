@@ -93,7 +93,7 @@ class ADL_NTree:
 class ADL_NTreeNode_Iterative(ADL_NTreeNode, ADL_NTree):
     '''BinaryTree Implementation'''
 
-    def __init__(self, value, children=None):
+    def __init__(self, value, children=[]):
 
         if children:
             for node in children:
@@ -136,16 +136,18 @@ class ADL_NTreeNode_Iterative(ADL_NTreeNode, ADL_NTree):
                 if not currNode.children:
                     currNode = None
                 else:
-                    self.stack.append(currNode)
-                    self.stack.extend(currNode.children[::-1])
-                    currNode = self.stack[-1]
+                    for n in currNode.children[::-1]:
+                        self.stack.extend([n, n])
+                    currNode = self.stack.pop()
 
 
         def __init__(self, node):
-            if not node:
-                return []
-
             self.stack = []
+
+            if not node:
+                return
+
+            self.stack.append(node)
             self.insertNodes(node)
 
         def __iter__(self):
@@ -155,13 +157,13 @@ class ADL_NTreeNode_Iterative(ADL_NTreeNode, ADL_NTree):
             if not self.stack:
                 raise StopIteration
 
-            nextNode = self.stack.pop()
+            currNode = self.stack.pop()
 
-            if self.stack and nextNode is self.stack[-1]:
-                self.stack.pop()
+            if self.stack and currNode is self.stack[-1]:
                 self.insertNodes(self.stack[-1])
+                currNode = self.stack.pop()
 
-            return nextNode.value
+            return currNode.value
 
     @property
     def postOrder(self):
