@@ -57,7 +57,24 @@ class ADL_BinarySearchTree_graph(ADL_BinarySearchTree):
     def graphRepresentation(self):
         return self._root.graphRepresentation if self._root else iter([])
 
+    @staticmethod
+    def validateBST_iterative(root):
+        queue = [(root, None, None)]
+        
+        while queue:
+            node, lo, hi = queue.pop(0)
+            
+            if (lo and node.data <= lo) or (hi and node.data >= hi):
+                return False
+                
+            if node.left_child:
+                queue.append((node.left_child, lo, node.data))
+            if node.right_child:
+                queue.append((node.right_child, node.data, hi))
+                
+        return True
 
+        
     def insertValue(self, value):
 
         if self._root is None:

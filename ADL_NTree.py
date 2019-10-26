@@ -42,7 +42,7 @@ class ADL_NTree:
 
     def isEqualToOther(self, other):
         if not isinstance(other, ADL_NTree):
-            raise NotImplementedError
+            False
 
         for leftList, rightList in zip(self.breadthFirst, other.breadthFirst):
             if leftList != rightList:

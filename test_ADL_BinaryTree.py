@@ -60,5 +60,25 @@ class Base_ADL_BinaryTree_tests(unittest.TestCase):
         self.assertFalse(rootC == rootB)
         self.assertTrue(rootC == rootC)
 
+    def test_kth_largest_node(self):
+        node1 = self.Node(1)
+        node3 = self.Node(3)
+        node5 = self.Node(5)
+        node7 = self.Node(7)
+
+        node2 = self.Node(2, node1, node3)
+        node6 = self.Node(6, node5, node7)
+
+        node4 = self.Node(4, node2, node6)
+
+        root = node4
+
+        iter = root.outOrder
+
+        k = 3
+        for i in range(k):
+            r = iter.__next__()
+        print(r)
+
 if __name__ == '__main__':
     unittest.main()

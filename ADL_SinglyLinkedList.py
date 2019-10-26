@@ -1,6 +1,7 @@
 from os import abort
 from ADL_SinglyLinkedListNode import *
 
+
 class ADL_SinglyLinkedList:
     """Singly Linked List Implementation"""
 
@@ -8,14 +9,12 @@ class ADL_SinglyLinkedList:
         self._startNode = None
         self._endNode = None
 
-
     def __len__(self):
         """Return the number of nodes from this node"""
         if self._startNode is None:
             return 0
 
         return len(self._startNode)
-
 
     def __str__(self):
         """Return the string description of this list"""
@@ -26,7 +25,6 @@ class ADL_SinglyLinkedList:
             sep = ", "
         s += "]"
         return s
-
 
     def __getitem__(self, index):
         assert 0 <= index and index < len(self), "index out of bounds"
@@ -48,7 +46,6 @@ class ADL_SinglyLinkedList:
         nodeAtIndex.value = value
         return oldValue
 
-
     class Iterator:
         def __init__(self, node):
             self._node = node
@@ -61,16 +58,13 @@ class ADL_SinglyLinkedList:
             self._node = self._node.next
             return value
 
-
     def __iter__(self):
         """Return an iterator"""
         return self.Iterator(self._startNode)
 
-
     @property
     def isEmpty(self):
         return self._startNode is None
-    
 
     def insertValueAtIndex(self, value, index):
         assert 0 <= index and index <= len(self), "index out of bounds"
@@ -78,7 +72,6 @@ class ADL_SinglyLinkedList:
         newNode = ADL_SinglyLinkedListNode(value)
 
         node = self._startNode
-
 
         if index == len(self):
             self.appendValue(value)
@@ -92,18 +85,16 @@ class ADL_SinglyLinkedList:
             newNode.next = nodeAtIndex.next
             nodeAtIndex.next = newNode
 
-
     def appendValue(self, value):
         newNode = ADL_SinglyLinkedListNode(value)
 
         if self.isEmpty:
             self._startNode = newNode
 
-        if self._endNode != None:
+        if self._endNode:
             self._endNode.next = newNode
 
         self._endNode = newNode
-
 
     def getValueAtIndex(self, index):
         if self._startNode is None:
@@ -112,14 +103,12 @@ class ADL_SinglyLinkedList:
 
         return self[index]
 
-
     def updateValueAtIndex(self, value, index):
         if self._startNode is None:
             raise AssertionError("Cannot update item in an empty Collection")
         assert 0 <= index and index < len(self), "index out of bounds"
 
         return self.__setitem__(index, value)
-
 
     def removeValueAtIndex(self, index):
         assert 0 <= index and index < len(self), "index out of bounds"
@@ -143,23 +132,28 @@ class ADL_SinglyLinkedList:
 
         return node.value
 
-
     def __eq__(self, other):
-        if isinstance(other, ADL_SinglyLinkedList) \
-            or isinstance(other, list):
-
+        if isinstance(other, ADL_SinglyLinkedList) or isinstance(other, list):
             return self.isEqualToOther(other)
-            
-        raise NotImplementedError
 
+        raise NotImplementedError
 
     def isEqualToOther(self, other):
         if len(self) != len(other):
             return False
 
-        for l,r in zip(self, other):
-            if l != r:
+        for left, right in zip(self, other):
+            if left != right:
                 return False
 
         return True
 
+    def findMiddleNode(self):
+        slow = self.head
+        fast = self.head
+
+        while fast and fast.next and fast.next.next:
+            slow = slow.next
+            fast = (fast.next).next
+
+        return slow

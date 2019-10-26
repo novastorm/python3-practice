@@ -38,7 +38,7 @@ class LongestPalindromicSubstring:
     @staticmethod
     def bruteforce_v3(s):
         """
-        Test all combinations 
+        Test all combinations
         with length greater than best last result
         with optimized string slicing
         """
@@ -165,3 +165,42 @@ class LongestPalindromicSubstring:
     @staticmethod
     def recursive(s):
         return LongestPalindromicSubstring.recursive_v4(s)
+
+
+###############################################################################
+
+import unittest
+from LongestPalindromicSubstring import *
+
+class Test_LongestPalindromicSubstring_bruteforce(unittest.TestCase):
+
+    def test_bruteforce_v1(self):
+        self.assertEqual(LongestPalindromicSubstring.bruteforce_v1("babad"), "bab")
+        self.assertEqual(LongestPalindromicSubstring.bruteforce_v1("a"), "a")
+        self.assertEqual(LongestPalindromicSubstring.bruteforce_v1("ac"), "a")
+
+    def test_bruteforce_v2(self):
+        self.assertEqual(LongestPalindromicSubstring.bruteforce_v2("babad"), "bab")
+        self.assertEqual(LongestPalindromicSubstring.bruteforce_v2("a"), "a")
+        self.assertEqual(LongestPalindromicSubstring.bruteforce_v2("ac"), "a")
+
+    def test_bruteforce_v3(self):
+        self.assertEqual(LongestPalindromicSubstring.bruteforce_v3("babad"), "bab")
+        self.assertEqual(LongestPalindromicSubstring.bruteforce_v3("a"), "a")
+        self.assertEqual(LongestPalindromicSubstring.bruteforce_v3("ac"), "a")
+
+class Test_LongestPalindromicSubstring_recursive(unittest.TestCase):
+
+    def test_recursive(self):
+        self.assertEqual(LongestPalindromicSubstring.recursive(""), "")
+        self.assertEqual(LongestPalindromicSubstring.recursive("a"), "a")
+        self.assertEqual(LongestPalindromicSubstring.recursive("aa"), "aa")
+        self.assertEqual(LongestPalindromicSubstring.recursive("ac"), "a")
+        self.assertEqual(LongestPalindromicSubstring.recursive("babad"), "bab")
+        self.assertEqual(LongestPalindromicSubstring.recursive("abcda"), "a")
+        LongestPalindromicSubstring.recursive("babaddtattarrattatddetartrateedredividerb")
+        # LongestPalindromicSubstring.recursive("euazbipzncptldueeuechubrcourfpftcebikrxhybkymimgvldiwqvkszfycvqyvtiwfckexmowcxztkfyzqovbtmzpxojfofbvwnncajvrvdbvjhcrameamcfmcoxryjukhpljwszknhiypvyskmsujkuggpztltpgoczafmfelahqwjbhxtjmebnymdyxoeodqmvkxittxjnlltmoobsgzdfhismogqfpfhvqnxeuosjqqalvwhsidgiavcatjjgeztrjuoixxxoznklcxolgpuktirmduxdywwlbikaqkqajzbsjvdgjcnbtfksqhquiwnwflkldgdrqrnwmshdpykicozfowmumzeuznolmgjlltypyufpzjpuvucmesnnrwppheizkapovoloneaxpfinaontwtdqsdvzmqlgkdxlbeguackbdkftzbnynmcejtwudocemcfnuzbttcoew")
+        # LongestPalindromicSubstring.recursive("vckpzcfezppubykyxvwhbwvgezvannjnnxgaqvesrhdsgngcbbdpqeodzmqbkrwekakrukwxhqjeacxhkixruwshgwkjthmtqumvqcvhhoavarlwhpzbbniqrswvyhtfquioooejsbnxdnjrfhzpdrljcuenzjpzkyrgpxrbtchnzmdkekhmuqpoljvrpndzmogeuxjotdsyrrudligpgwcblaimqdqsgmjrbvyonugzsbkdhawmewiaccuvfnpftcjdjuljekiaipknorknwyx")
+
+if __name__ == '__main__':
+    unittest.main()
