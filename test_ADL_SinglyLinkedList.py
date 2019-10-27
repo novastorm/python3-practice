@@ -1,6 +1,12 @@
 import unittest
 from ADL_SinglyLinkedList import *
 
+class Test_SinglyLinkedListNode(unittest.TestCase):
+
+    def test_SinglyLinkedListNodeInitialize(self):
+        with self.assertRaises(TypeError):
+            aList = ADL_SinglyLinkedListNode()
+
 class Test_SinglyLinkedList(unittest.TestCase):
 
     def setUp(self):
@@ -40,7 +46,7 @@ class Test_SinglyLinkedList(unittest.TestCase):
 
         listLen = len(self.list)
         self.list.insertValueAtIndex(4, listLen)
-        self.assertEqual(len(self.list), 3)        
+        self.assertEqual(len(self.list), 3)
         self.assertFalse(self.list.isEmpty)
         self.assertEqual(self.list[listLen], 4)
         self.assertTrue(self.list == [0, 2, 4])

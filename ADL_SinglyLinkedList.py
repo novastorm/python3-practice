@@ -1,5 +1,98 @@
 from os import abort
-from ADL_SinglyLinkedListNode import *
+
+class SinglyLinkedListError(Exception):
+    """Base (catch-all) binarytree exception."""
+    pass
+
+
+class SinglyLinkedListNodeTypeError(SinglyLinkedListError):
+    """Node was not an instance of :class:`SinglyLinkedListNode`."""
+    pass
+
+
+class SinglyLinkedListNodeValueError(SinglyLinkedListError):
+    """Node value was not a valid."""
+    pass
+
+class ADL_SinglyLinkedListNode:
+    """Singly Linked List Node Implementation"""
+
+    def __init__(self, value):
+        self._next = None
+        self._value = value
+
+
+    @property
+    def value(self):
+        return self._value
+    @value.setter
+    def value(self, newValue):
+        self._value = newValue
+
+
+    @property
+    def next(self):
+        return self._next
+    @next.setter
+    def next(self, newValue):
+        self._next = newValue
+
+    @classmethod
+    def count(cls, aList):
+        """Return the number of nodes in a list"""
+        if not isinstance(aList, cls):
+            raise TypeError
+
+        results = 0
+
+        while aList:
+            results += 1
+            aList = aList.next
+
+        return results
+
+    @classmethod
+    def hasCycle(cls, aList):
+        if not isinstance(aList, ADL_SinglyLinkedListNode):
+            return NotImplemented
+
+        slow = aList
+        fast = aList
+
+        while fast:
+            slow = slow.next
+            if not fast.next:
+                break
+            fast = fast.next.next
+
+            if fast == slow:
+                return True
+
+        return False
+
+    @classmethod
+    def reverse(cls, aList):
+        if not aList:
+            return aList
+
+        next = aList
+        aList = None
+
+        while next:
+            next.next, aList, next = aList, next, next.next
+
+        return aList
+
+    @classmethod
+    def findMiddleNode(cls, aList):
+        slow = aList
+        fast = aList
+
+        while fast and fast.next and fast.next.next:
+            slow = slow.next
+            fast = (fast.next).next
+
+        return slow
 
 
 class ADL_SinglyLinkedList:
@@ -8,13 +101,14 @@ class ADL_SinglyLinkedList:
     def __init__(self):
         self._startNode = None
         self._endNode = None
+        self._count = 0
 
     def __len__(self):
         """Return the number of nodes from this node"""
         if self._startNode is None:
             return 0
 
-        return len(self._startNode)
+        return ADL_SinglyLinkedListNode.count(self._startNode)
 
     def __str__(self):
         """Return the string description of this list"""
@@ -147,13 +241,3 @@ class ADL_SinglyLinkedList:
                 return False
 
         return True
-
-    def findMiddleNode(self):
-        slow = self.head
-        fast = self.head
-
-        while fast and fast.next and fast.next.next:
-            slow = slow.next
-            fast = (fast.next).next
-
-        return slow
