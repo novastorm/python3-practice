@@ -1,7 +1,7 @@
 import enum
 
 
-class EnumWithAssociatedValues(tuple, enum.Enum):
+class SwiftEnum(tuple, enum.Enum):
     def __new__(cls, clsargs):
         value = len(cls.__members__) + 1
 
@@ -35,3 +35,6 @@ class EnumWithAssociatedValues(tuple, enum.Enum):
         return (tuple.__eq__(self, other) and
                 type(self) == type(other) and
                 self._name_ == other._name_)
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
