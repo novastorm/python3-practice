@@ -1,9 +1,9 @@
 import enum
 
-class SwiftEnum(tuple, enum.Enum):
+
+class EnumWithAssociatedValues(tuple, enum.Enum):
     def __new__(cls, clsargs):
         value = len(cls.__members__) + 1
-
 
         def func(*args):
             if len(args) != len(clsargs):
@@ -17,28 +17,21 @@ class SwiftEnum(tuple, enum.Enum):
             obj._name_ = func._name_
             return obj
 
-
         func._value_ = func.value = value
 
         return func
-    
 
     def __str__(self):
         return '{}.{}({})'.format(type(self).__name__,
                                   self.name,
                                   ', '.join(map(repr, self)))
-    
 
     __repr__ = __str__
 
-    
-    def __hash__(self, other):
+    def __hash__(self):
         return hash((self._name_, tuple.__hash__(self)))
-
 
     def __eq__(self, other):
         return (tuple.__eq__(self, other) and
                 type(self) == type(other) and
                 self._name_ == other._name_)
-
-__version__ = "1.0.0"
