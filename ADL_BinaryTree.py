@@ -3,12 +3,12 @@ class BinaryTreeError(Exception):
     pass
 
 
-class NodeTypeError(BinaryTreeError):
+class BinaryTreeNodeTypeError(BinaryTreeError):
     """Node was not an instance of :class:`binarytree.Node`."""
     pass
 
 
-class NodeValueError(BinaryTreeError):
+class BinaryTreeNodeValueError(BinaryTreeError):
     """Node value was not a valid."""
     pass
 
@@ -81,7 +81,7 @@ class ADL_BinaryTreeNode:
     @left.setter
     def left(self, newValue):
         if newValue is not None and not isinstance(newValue, ADL_BinaryTree):
-            raise NodeTypeError('left child must be a ADL_BinaryTree instance')
+            raise BinaryTreeNodeTypeError('left child must be a ADL_BinaryTree instance')
         self._left = newValue
 
     @property
@@ -91,7 +91,7 @@ class ADL_BinaryTreeNode:
     @right.setter
     def right(self, newValue):
         if newValue is not None and not isinstance(newValue, ADL_BinaryTree):
-            raise NodeTypeError('right child must be a ADL_BinaryTree instance')
+            raise BinaryTreeNodeTypeError('right child must be a ADL_BinaryTree instance')
         self._right = newValue
 
     def __len__(self):
@@ -104,9 +104,9 @@ class ADL_BinaryTreeNode_Iterative(ADL_BinaryTreeNode, ADL_BinaryTree):
     def __init__(self, value, left=None, right=None):
 
         if left is not None and not isinstance(left, ADL_BinaryTree):
-            raise NodeTypeError('left child must be a ADL_BinaryTree instance')
+            raise BinaryTreeNodeTypeError('left child must be a ADL_BinaryTree instance')
         if right is not None and not isinstance(right, ADL_BinaryTree):
-            raise NodeTypeError('right child must be a ADL_BinaryTree instance')
+            raise BinaryTreeNodeTypeError('right child must be a ADL_BinaryTree instance')
 
         self.value = value
         self.left = left
@@ -256,7 +256,7 @@ class ADL_BinaryTreeNode_Iterative(ADL_BinaryTreeNode, ADL_BinaryTree):
                 result = self.stack.pop()
 
                 self.stack.append(currNode)
-                
+
                 self.insertNodes(currNode.right)
 
                 nextNode = self.stack.pop()
